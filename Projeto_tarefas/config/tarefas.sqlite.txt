@@ -1,0 +1,8 @@
+CREATE TABLE tarefa (
+
+id INTEGER PRIMARY KEY,
+titulo VARCHAR(255),
+descricao VARCHAR(255),
+status INTEGER,
+data DATE
+);
