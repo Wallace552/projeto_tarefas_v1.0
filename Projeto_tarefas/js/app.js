@@ -23,6 +23,7 @@ function adicionarTarefa(titulo, descricao, data, status) {
     };
 }
 
+// usada para criar a lista de tarefas//
 function listarTarefas(){
 	const transaction = db.transaction("tarefas", "readonly");
 	
@@ -40,7 +41,13 @@ function listarTarefas(){
 		
 		
 		tarefas.forEach(function(tarefa){
+			const textoBotaoStatus = tarefa.status === "concluida" ? "Reabir" : "Concluir";
 			const elemento = document.createElement("div");
+			elemento.classList.add("tarefa");
+			
+			if (tarefa.status === "concluida") {
+			elemento.classList.add("concluida");
+			}
 			elemento.innerHTML = `
 			<p>
 		<strong>${tarefa.titulo}</strong>
@@ -50,22 +57,23 @@ function listarTarefas(){
 		Data: ${tarefa.data}
 		<br>
 		Status: ${tarefa.status}
+		<br>
 		
-		<button class="botao-excluir">Excluir</button>
-		<button class="botao-concluir">${tarefa.status === "concluida" ? "Reabrir" : "Concluir"}</button>
 		<button class="botao-editar">Editar</button>
+		<button class="botao-concluir">${textoBotaoStatus}</button>
+		<button class="botao-excluir">Excluir</button>
 			</p>`;
 			
 		const botaoExcluir = elemento.querySelector(".botao-excluir");
 		botaoExcluir.addEventListener("click", function(){
 			excluirTarefa(tarefa.id);
 		});
-		
+			
 		const botaoConcluir = elemento.querySelector(".botao-concluir");
 		botaoConcluir.addEventListener("click", function(){
 		alterarStatusTarefa(tarefa.id);
 		
-		console.log("Botao Concluir clicado");
+		//console.log("Botao Concluir clicado");
 		});
 		
 		const botaoEditar = elemento.querySelector(".botao-editar");
@@ -186,11 +194,18 @@ function prepararEdicao(tarefa){
 	document.getElementById("status").value = tarefa.status;
 	
 	document.getElementById("botao-salvar").textContent = "Salvar alterações";
-	
+	document.getElementById("botao-cancelar").hidden = false;
 };
+
+function cancelarEdicao(){
+	tarefaEditando = null;
+	document.getElementById("form-tarefa").reset();
+	document.getElementById("botao-salvar").textContent = "Adicionar tarefa";
+	
+	document.getElementById("botao-cancelar").hidden = true;
+};
+
 // Abaixo variaveis declaradas //
-
-
 let tarefaEditando = null; //VARIAVEL PARA GUARDAR O ID DA TAREFA QUE ESTA SENDO EDITADA//
 
 const formulario = document.getElementById("form-tarefa");
@@ -223,6 +238,10 @@ const botaoListar = document.getElementById("botao-listar");
 			listarTarefas();
 		});
 
-
+const botaoCancelar = document.getElementById("botao-cancelar");
+		botaoCancelar.addEventListener("click", function(){
+			cancelarEdicao();
+			console.log("Edição Cancelada com sucesso");
+		});
 
 	
