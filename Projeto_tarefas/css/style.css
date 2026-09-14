@@ -1,3 +1,24 @@
+.tarefa {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+.tarefa.concluida{
+
+opacity: 0.6;	
+	
+}
+.tarefa.concluida strong {
+    text-decoration: line-through;
+}
+
+
+
+
+
+
+
 form {
  margin: 0 auto;
  width: 400px;
@@ -36,13 +57,15 @@ textarea {
  height: 5em;
  resize: vertical;
 }
+
 .botao {
     text-align: center;
     margin-top: 20px;   
 }
-.botao button {
+.tarefa button {
  background-color:#4CAF50;
  color: white;
+ margin-top: 15px;
  margin-left: .5em;
  padding-left: 10px;
  font-size: 16px;
@@ -50,9 +73,9 @@ textarea {
  border-radius: 5px;
  cursor: pointer;
  transition: background-color 0.3s;
-  
+ 
 }
-.botao button:hover {
+.tarefa button:hover {
 	background-color: #3d8e41;
 }
 
