@@ -1,24 +1,48 @@
-<html> 
-<head>
-	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<h1 id="title.head">LISTA DE TAREFAS</h1>
-	<link rel="stylesheet" href="style.css">
-</head>
-<body> 
-<form action="./index.php" method="post">
-<div>
-	<label for="titulo">Titulo:</label>
-	<input type="text" id="title" name="titulo"><br></br>
-</div>
-<div>
-	<label for="descricao">Descrição da Tarefa:</label>	
-	<textarea id="descricao" name="descricao"></textarea><br></br>
-</div>
-<div class="botao">
-	<button type="submit">Cadastrar Tarefa</button>
-</div>
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-</form>
-</body> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gerenciador de Tarefas</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <h1>Gerenciador de Tarefas</h1>
+    
+	
+	<form id="form-tarefa">
+	
+	<label for="titulo"> Titulo </label>
+	<input id="titulo" type="text" required>
+	
+	<label for="descricao"> Descrição </label>
+	<input id="descricao" type="text" required>
+	
+	<label for=data> Data </label>
+	<input id="data" type="date" required>
+	
+	<label for="status"></label>
+	<select id="status">
+	<option value="pendente"> Pendente </option>
+	<option value="concluida"> Concluída </option>
+	</select>
+	
+	<button id="botao-salvar" type="submit"> Adicionar Tarefa</button>
+	<button id="botao-listar" type="button" > Listar Tarefas </button>
+	
+	</form>
+	
+	<h2>Listar Minhas Tarefas</h2>
+	
+	<div id=lista-tarefas></div>
+		
+	<script src="../js/database.js"></script>
+    <script src="../js/app.js"></script>
+	
+</body>
 </html>
