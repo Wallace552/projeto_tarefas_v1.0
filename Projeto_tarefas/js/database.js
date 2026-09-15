@@ -19,9 +19,9 @@ request.onsuccess = function (event) {
     db = event.target.result;
 
     console.log("Banco aberto com sucesso!");
-
-    // Só para teste
     console.log("Conexão:", db);
+	document.dispatchEvent(new Event ("bancoPronto"));
+
 };
 
 request.onerror = function (event) {

@@ -14,6 +14,7 @@
 
     <h1>Gerenciador de Tarefas</h1>
     
+	<div class="form-container">
 	
 	<form id="form-tarefa">
 	
@@ -29,13 +30,23 @@
 	<label for="status"></label>
 	<select id="status">
 	<option value="pendente"> Pendente </option>
-	<option value="concluida"> Concluída </option>
+	<option value="poncluida"> Concluída </option>
 	</select>
 	
 	<button id="botao-salvar" type="submit"> Adicionar Tarefa</button>
-	<button id="botao-listar" type="button" > Listar Tarefas </button>
+	<button id="botao-cancelar" type="button" hidden> Cancelar Edição </button>
 	
 	</form>
+	
+	</div>
+	<div class="filtro">
+	
+	<button type="button" id="filtro-todas">Todas</button>
+	<button type="button" id="filtro-pendentes">Pendentes</button>
+	<button type="button" id="filtro-concluidas">Concluídas</button>
+	
+	</div>
+	
 	
 	<h2>Listar Minhas Tarefas</h2>
 	

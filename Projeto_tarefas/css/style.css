@@ -1,8 +1,9 @@
 .tarefa {
     border: 1px solid #ccc;
     padding: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     border-radius: 8px;
+	background-color: #f9f9f9;
 }
 .tarefa.concluida{
 
@@ -13,69 +14,57 @@ opacity: 0.6;
     text-decoration: line-through;
 }
 
-
-
-
-
-
-
-form {
- margin: 0 auto;
- width: 400px;
- padding: 1em;
- border: 1px solid #ccc;
- border-radius: 1em;
- 
-}
-h1 {
- margin: 0 auto;
- width: 370px;
- padding: 1em;
- border: 1px solid #ccc;
- border-radius: 1em;
- text-align: center;
-}
-form div + div {
- margin-top: 1em;
-}
-label {
- display: inline-block;
- width: 90px;
- text-align: right;
-}
-input, textarea {
- font: 1em sans-serif;
- width: 300px;
- box-sizing: border-box;
- border: 1px solid #999;
-}
-input:focus, textarea:focus {
- border-color: #000;
-}
-textarea {
- vertical-align: top;
- height: 5em;
- resize: vertical;
-}
-
-.botao {
-    text-align: center;
-    margin-top: 20px;   
-}
 .tarefa button {
  background-color:#4CAF50;
  color: white;
  margin-top: 15px;
  margin-left: .5em;
- padding-left: 10px;
+ padding: 6px 10px;
  font-size: 16px;
- border: none;
+ border: 1px solid #aaa;
  border-radius: 5px;
  cursor: pointer;
- transition: background-color 0.3s;
- 
+ transition: background-color 0.4s;
 }
 .tarefa button:hover {
 	background-color: #3d8e41;
 }
 
+.tarefa strong{
+	font-size: 18px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+input, select, button {
+	padding: 8px;
+	font-size: 16px;
+}
+
+button {
+	cursor: pointer;
+}
+
+.form-container {
+	border: 1px solid #ccc;
+	padding: 20px;
+	border-radius: 10px;
+	margin-bottom: 30px;
+}
+
+.filtro-ativo {
+    font-weight: bold;
+    border: 2px solid #333;
+	border-radius: 3px;
+}

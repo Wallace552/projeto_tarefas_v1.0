@@ -1,3 +1,45 @@
+
+// Abaixo variaveis declaradas //
+let tarefaEditando = null;
+let filtroAtual = "todas";
+const formulario = document.getElementById("form-tarefa");
+const botaoCancelar = document.getElementById("botao-cancelar");
+//variaveis dos filtros da lista de tarefas//
+const filtroTodas = document.getElementById("filtro-todas");
+const filtroPendentes = document.getElementById("filtro-pendentes");
+const filtroConcluidas = document.getElementById("filtro-concluidas");
+
+filtroTodas.addEventListener("click", function(){
+					filtroAtual = "todas";
+					listarTarefas();
+					atualizarFiltroVisual();
+				});
+filtroPendentes.addEventListener("click", function(){
+					filtroAtual = "pendentes";
+					//console.log(filtroAtual);
+					listarTarefas();
+					atualizarFiltroVisual();
+				});
+filtroConcluidas.addEventListener("click", function(){
+					filtroAtual = "concluidas";
+					listarTarefas();
+					atualizarFiltroVisual();
+				});
+
+function atualizarFiltroVisual (){
+	filtroTodas.classList.remove("filtro-ativo");
+	filtroPendentes.classList.remove("filtro-ativo");
+	filtroConcluidas.classList.remove("filtro-ativo");
+	
+	if(filtroAtual === "todas"){
+		filtroTodas.classList.add("filtro-ativo");
+	}if(filtroAtual === "pendentes"){
+		filtroPendentes.classList.add("filtro-ativo");
+	}if(filtroAtual === "concluidas"){
+		filtroConcluidas.classList.add("filtro-ativo");	
+	}
+};
+
 function adicionarTarefa(titulo, descricao, data, status) {
 
     const transaction = db.transaction("tarefas", "readwrite");
@@ -10,7 +52,7 @@ function adicionarTarefa(titulo, descricao, data, status) {
         data: data,
         status: status
     };
-
+	console.log("Tarea que esta sendo add:", tarefa);
     const request = store.add(tarefa);
 
     request.onsuccess = function () {
@@ -26,22 +68,29 @@ function adicionarTarefa(titulo, descricao, data, status) {
 // usada para criar a lista de tarefas//
 function listarTarefas(){
 	const transaction = db.transaction("tarefas", "readonly");
-	
 	const store = transaction.objectStore("tarefas");
-	
 	const request = store.getAll();
 	
 	
 	request.onsuccess = function(){
 		
-		const tarefas = request.result;
-		const listarTarefas = document.getElementById("lista-tarefas");
+		const tarefas = request.result.reverse();
 		const lista = document.getElementById("lista-tarefas");
+		const tarefasFiltradas = tarefas.filter(function(tarefa){
+			if(filtroAtual === "pendentes"){
+				return tarefa.status === "pendente"
+				
+			}if(filtroAtual === "concluidas"){
+				return tarefa.status === "concluida"
+			}
+			return true;
+		});
+		
 		lista.innerHTML = "";
-		
-		
-		tarefas.forEach(function(tarefa){
+				
+		tarefasFiltradas.forEach(function(tarefa){
 			const textoBotaoStatus = tarefa.status === "concluida" ? "Reabir" : "Concluir";
+			const textoStatus = tarefa.status === "concluida" ? "Concluída ✓" : "Pendente";
 			const elemento = document.createElement("div");
 			elemento.classList.add("tarefa");
 			
@@ -56,7 +105,7 @@ function listarTarefas(){
 		<br>
 		Data: ${tarefa.data}
 		<br>
-		Status: ${tarefa.status}
+		Status: ${textoStatus}
 		<br>
 		
 		<button class="botao-editar">Editar</button>
@@ -64,9 +113,11 @@ function listarTarefas(){
 		<button class="botao-excluir">Excluir</button>
 			</p>`;
 			
+			
 		const botaoExcluir = elemento.querySelector(".botao-excluir");
 		botaoExcluir.addEventListener("click", function(){
-			excluirTarefa(tarefa.id);
+			confirmar = confirm ("Tem certeza que deseja excluir esta tarefa?");
+			if(confirmar){excluirTarefa(tarefa.id);}
 		});
 			
 		const botaoConcluir = elemento.querySelector(".botao-concluir");
@@ -174,16 +225,6 @@ const store = transaction.objectStore("tarefas");
 	};
 };
 
-function editarTarefa(tarefa){
-	tarefaEditando = tarefa.id;
-	
-	document.getElementById("titulo").value = tarefa.titulo;
-	document.getElementById("descricao").value = tarefa.descricao;
-	document.getElementById("data").value = tarefa.data;
-	document.getElementById("status").value = tarefa.status;
-	
-};
-
 function prepararEdicao(tarefa){
 	
 	tarefaEditando = tarefa.id;
@@ -205,11 +246,7 @@ function cancelarEdicao(){
 	document.getElementById("botao-cancelar").hidden = true;
 };
 
-// Abaixo variaveis declaradas //
-let tarefaEditando = null; //VARIAVEL PARA GUARDAR O ID DA TAREFA QUE ESTA SENDO EDITADA//
-
-const formulario = document.getElementById("form-tarefa");
-	formulario.addEventListener("submit", function (event) {
+formulario.addEventListener("submit", function (event) {
 		
 	event.preventDefault();
 	
@@ -232,16 +269,12 @@ const formulario = document.getElementById("form-tarefa");
 	
 });
 
-const botaoListar = document.getElementById("botao-listar");
-		botaoListar.addEventListener("click", function(){
-			console.log("BOTÃO LISTAR FOI CLICADO");
-			listarTarefas();
-		});
-
-const botaoCancelar = document.getElementById("botao-cancelar");
-		botaoCancelar.addEventListener("click", function(){
+botaoCancelar.addEventListener("click", function(){
 			cancelarEdicao();
 			console.log("Edição Cancelada com sucesso");
 		});
 
+document.addEventListener("bancoPronto", function(){
+	listarTarefas();
+});
 	
